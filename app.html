@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Cross Post Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .view-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Analytics Styles */
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid transparent;
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            height: 200px;
+            margin-top: 2rem;
+        }
+
+        .bar {
+            flex: 1;
+            background: var(--accent-primary);
+            border-radius: 0.5rem 0.5rem 0 0;
+            opacity: 0.7;
+            transition: height 1s ease;
+            position: relative;
+        }
+
+        .bar:hover {
+            opacity: 1;
+        }
+
+        .bar span {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Settings Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop playsinline class="video-bg">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="margin-bottom: 2rem; padding: 0 1rem;">
+                <a href="index.html" class="logo" style="font-size: 1.25rem;">Cross Post Pro</a>
+            </div>
+            <nav class="flex-col">
+                <a href="#" class="sidebar-link active" data-view="dashboard">
+                    <i class="fa-solid fa-house"></i> Dashboard
+                </a>
+                <a href="#" class="sidebar-link" data-view="history">
+                    <i class="fa-solid fa-clock-rotate-left"></i> History
+                </a>
+                <a href="#" class="sidebar-link" data-view="analytics">
+                    <i class="fa-solid fa-chart-simple"></i> Analytics
+                </a>
+                <a href="#" class="sidebar-link" data-view="settings">
+                    <i class="fa-solid fa-gear"></i> Settings
+                </a>
+            </nav>
+            <div style="margin-top: auto; padding: 1rem;">
+                <div class="card"
+                    style="padding: 1rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);">
+                    <p style="font-size: 0.875rem; color: var(--text-primary); margin-bottom: 0.5rem;">Pro Plan</p>
+                    <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                        <div style="width: 70%; height: 100%; background: var(--accent-primary);"></div>
+                    </div>
+                    <p style="font-size: 0.75rem; margin-top: 0.5rem;">70% uploads used</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header
+                style="position: static; background: transparent; border: none; padding: 0 0 2rem 0; display: flex; justify-content: space-between; align-items: center;">
+                <h2 id="pageTitle">Dashboard</h2>
+                <div class="flex-center" style="gap: 1rem;">
+                    <span id="userDisplayName" style="font-weight: 600; color: var(--text-secondary);">User</span>
+                    <button class="btn btn-outline" style="padding: 0.5rem 1rem;"><i
+                            class="fa-regular fa-bell"></i></button>
+                    <div
+                        style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border);">
+                    </div>
+                </div>
+            </header>
+
+            <!-- VIEW: DASHBOARD -->
+            <div id="dashboard-view" class="view-section active">
+                <div class="grid-cols-2" style="grid-template-columns: 2fr 1fr;">
+                    <!-- Left Column: Upload & Select -->
+                    <div class="flex-col" style="gap: 2rem;">
+                        <!-- Upload Zone -->
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">1. Upload Content</h3>
+                            <div id="uploadZone" class="upload-zone">
+                                <i class="fa-solid fa-cloud-arrow-up"
+                                    style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                                <p style="font-weight: 600; color: var(--text-primary);">Drag & Drop your files here</p>
+                                <p style="font-size: 0.875rem; margin-bottom: 1.5rem;">Supports MP4, MOV, JPG, PNG</p>
+                                <button class="btn btn-outline"
+                                    onclick="document.getElementById('fileInput').click()">Browse Files</button>
+                                <input type="file" id="fileInput" hidden multiple accept="video/*,image/*">
+                            </div>
+                            <div id="fileList" style="margin-top: 1rem; display: none;"></div>
+                        </div>
+
+                        <!-- Platform Selection -->
+                        <div class="card">
+                            <h3 style="margin-bottom: 1rem;">2. Select Platforms</h3>
+                            <div class="platform-grid">
+                                <div class="platform-card" data-platform="facebook">
+                                    <i class="fa-brands fa-facebook platform-icon" style="color: #1877F2;"></i>
+                                    <p>Facebook</p>
+                                </div>
+                                <div class="platform-card" data-platform="instagram">
+                                    <i class="fa-brands fa-instagram platform-icon" style="color: #E1306C;"></i>
+                                    <p>Instagram</p>
+                                </div>
+                                <div class="platform-card" data-platform="pinterest">
+                                    <i class="fa-brands fa-pinterest platform-icon" style="color: #E60023;"></i>
+                                    <p>Pinterest</p>
+                                </div>
+                                <div class="platform-card" data-platform="twitter">
+                                    <i class="fa-brands fa-twitter platform-icon" style="color: #1DA1F2;"></i>
+                                    <p>Twitter</p>
+                                </div>
+                                <div class="platform-card" data-platform="linkedin">
+                                    <i class="fa-brands fa-linkedin platform-icon" style="color: #0A66C2;"></i>
+                                    <p>LinkedIn</p>
+                                </div>
+                                <div class="platform-card" data-platform="youtube">
+                                    <i class="fa-brands fa-youtube platform-icon" style="color: #FF0000;"></i>
+                                    <p>Shorts</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="postBtn" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem;">
+                            <i class="fa-solid fa-paper-plane" style="margin-right: 0.5rem;"></i> Post Everywhere
+                        </button>
+                    </div>
+
+                    <!-- Right Column: Recent Activity Preview -->
+                    <div class="flex-col" style="gap: 2rem;">
+                        <div class="card" style="height: 100%;">
+                            <h3 style="margin-bottom: 1.5rem;">Recent Activity</h3>
+                            <div id="dashboardHistoryList" class="flex-col" style="gap: 1rem;">
+                                <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                                    <p>No recent posts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: HISTORY -->
+            <div id="history-view" class="view-section">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3>All Post History</h3>
+                        <button class="btn btn-outline" onclick="clearHistory()">Clear History</button>
+                    </div>
+                    <div id="fullHistoryList" class="flex-col" style="gap: 1rem;">
+                        <!-- Full history injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: ANALYTICS -->
+            <div id="analytics-view" class="view-section">
+                <div class="grid-cols-2" style="margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <h3>Total Reach</h3>
+                        <div class="value" id="statReach">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Engagement Rate</h3>
+                        <div class="value" id="statEngagement">-</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Weekly Performance</h3>
+                    <div id="analyticsChart" class="bar-chart">
+                        <!-- Bars injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: SETTINGS -->
+            <div id="settings-view" class="view-section">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 2rem;">User Preferences</h3>
+                    <div class="form-group">
+                        <label class="form-label">Display Name</label>
+                        <input type="text" id="settingName" class="form-input" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Default Platform</label>
+                        <select id="settingPlatform" class="form-input"
+                            style="background: var(--bg-primary); color: var(--text-primary);">
+                            <option value="">None</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="youtube">YouTube Shorts</option>
+                        </select>
+                    </div>
+                    <button id="saveSettingsBtn" class="btn btn-primary" style="width: 100%;">Save Changes</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid var(--success); padding: 1rem 2rem; border-radius: 0.5rem; display: flex; align-items: center; gap: 1rem; transform: translateY(150%); transition: transform var(--transition-medium); box-shadow: var(--shadow-lg); z-index: 1000;">
+        <i class="fa-solid fa-circle-check" style="color: var(--success); font-size: 1.5rem;"></i>
+        <div>
+            <h4 style="margin-bottom: 0.25rem;">Success!</h4>
+            <p style="font-size: 0.875rem;">Action completed.</p>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

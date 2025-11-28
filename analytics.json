@@ -1,0 +1,13 @@
+{
+  "weekly_stats": [12, 19, 3, 5, 2, 3, 15],
+  "platform_engagement": {
+    "facebook": 45,
+    "instagram": 85,
+    "pinterest": 30,
+    "twitter": 25,
+    "linkedin": 60,
+    "youtube": 50
+  },
+  "total_reach": 12500,
+  "engagement_rate": "4.8%"
+}
