@@ -183,27 +183,33 @@
                         <div class="card">
                             <h3 style="margin-bottom: 1rem;">2. Select Platforms</h3>
                             <div class="platform-grid">
-                                <div class="platform-card" data-platform="facebook">
+                                <div class="platform-card" data-platform="facebook" data-connected="true">
+                                    <div class="platform-status"></div>
                                     <i class="fa-brands fa-facebook platform-icon" style="color: #1877F2;"></i>
                                     <p>Facebook</p>
                                 </div>
-                                <div class="platform-card" data-platform="instagram">
+                                <div class="platform-card" data-platform="instagram" data-connected="true">
+                                    <div class="platform-status"></div>
                                     <i class="fa-brands fa-instagram platform-icon" style="color: #E1306C;"></i>
                                     <p>Instagram</p>
                                 </div>
-                                <div class="platform-card" data-platform="pinterest">
+                                <div class="platform-card" data-platform="pinterest" data-connected="false">
+                                    <div class="platform-status"></div>
                                     <i class="fa-brands fa-pinterest platform-icon" style="color: #E60023;"></i>
                                     <p>Pinterest</p>
                                 </div>
-                                <div class="platform-card" data-platform="twitter">
+                                <div class="platform-card" data-platform="twitter" data-connected="true">
+                                    <div class="platform-status"></div>
                                     <i class="fa-brands fa-twitter platform-icon" style="color: #1DA1F2;"></i>
                                     <p>Twitter</p>
                                 </div>
-                                <div class="platform-card" data-platform="linkedin">
+                                <div class="platform-card" data-platform="linkedin" data-connected="false">
+                                    <div class="platform-status"></div>
                                     <i class="fa-brands fa-linkedin platform-icon" style="color: #0A66C2;"></i>
                                     <p>LinkedIn</p>
                                 </div>
-                                <div class="platform-card" data-platform="youtube">
+                                <div class="platform-card" data-platform="youtube" data-connected="true">
+                                    <div class="platform-status"></div>
                                     <i class="fa-brands fa-youtube platform-icon" style="color: #FF0000;"></i>
                                     <p>Shorts</p>
                                 </div>
@@ -235,7 +241,15 @@
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                         <h3>All Post History</h3>
-                        <button class="btn btn-outline" onclick="clearHistory()">Clear History</button>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn btn-outline" onclick="exportHistory()"><i class="fa-solid fa-download"
+                                    style="margin-right: 0.5rem;"></i>Export</button>
+                            <button class="btn btn-outline" onclick="clearHistory()">Clear History</button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" id="historySearch" class="form-input"
+                            placeholder="Search history by platform or date..." style="max-width: 400px;">
                     </div>
                     <div id="fullHistoryList" class="flex-col" style="gap: 1rem;">
                         <!-- Full history injected here -->
@@ -272,13 +286,49 @@
                         <input type="text" id="settingName" class="form-input" placeholder="Enter your name">
                     </div>
                     <div class="form-group">
+                        <label class="form-label">Email Notifications</label>
+                        <input type="email" id="settingEmail" class="form-input" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Default Platform</label>
                         <select id="settingPlatform" class="form-input"
                             style="background: var(--bg-primary); color: var(--text-primary);">
                             <option value="">None</option>
+                            <option value="facebook">Facebook</option>
                             <option value="instagram">Instagram</option>
-                            <option value="tiktok">TikTok</option>
+                            <option value="pinterest">Pinterest</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="linkedin">LinkedIn</option>
                             <option value="youtube">YouTube Shorts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"
+                            style="display: flex; align-items: center; justify-content: space-between;">
+                            <span>Auto-save drafts</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="settingAutoSave" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"
+                            style="display: flex; align-items: center; justify-content: space-between;">
+                            <span>Enable notifications</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="settingNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Post Privacy</label>
+                        <select id="settingPrivacy" class="form-input"
+                            style="background: var(--bg-primary); color: var(--text-primary);">
+                            <option value="public">Public</option>
+                            <option value="friends">Friends Only</option>
+                            <option value="private">Private</option>
                         </select>
                     </div>
                     <button id="saveSettingsBtn" class="btn btn-primary" style="width: 100%;">Save Changes</button>
@@ -298,7 +348,7 @@
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>

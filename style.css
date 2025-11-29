@@ -52,7 +52,6 @@ body {
     object-fit: cover;
     z-index: -1;
     opacity: 0.4;
-    /* Adjust for readability */
 }
 
 /* Typography */
@@ -69,7 +68,6 @@ h6 {
 
 h1 {
     font-size: 5rem;
-    /* Bigger font size */
     letter-spacing: -0.02em;
 }
 
@@ -216,19 +214,15 @@ nav {
 .hero {
     min-height: 100vh;
     padding-top: 80px;
-    /* Header height */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Center horizontally */
     position: relative;
     text-align: center;
-    /* Center text */
 }
 
 .hero-content {
     max-width: 800px;
-    /* Increased width for centered text */
     margin: 0 auto;
 }
 
@@ -240,7 +234,6 @@ nav {
 
 .hero p {
     font-size: 1.5rem;
-    /* Bigger subtitle */
     margin-bottom: 2.5rem;
 }
 
@@ -338,6 +331,7 @@ nav {
     cursor: pointer;
     transition: var(--transition-fast);
     opacity: 0.7;
+    position: relative;
 }
 
 .platform-card:hover {
@@ -352,9 +346,89 @@ nav {
     box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
 }
 
+.platform-card[data-connected="false"] {
+    opacity: 0.5;
+}
+
+.platform-card[data-connected="false"]:hover::after {
+    content: "Not Connected";
+    position: absolute;
+    top: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+    z-index: 10;
+}
+
+.platform-status {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--error);
+}
+
+.platform-card[data-connected="true"] .platform-status {
+    background: var(--success);
+    box-shadow: 0 0 10px var(--success);
+}
+
 .platform-icon {
     font-size: 2rem;
     margin-bottom: 0.5rem;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border);
+    transition: var(--transition-fast);
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: var(--transition-fast);
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked+.toggle-slider {
+    background-color: var(--accent-primary);
+}
+
+.toggle-switch input:checked+.toggle-slider:before {
+    transform: translateX(24px);
 }
 
 /* Responsive */
